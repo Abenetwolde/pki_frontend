@@ -64,13 +64,13 @@ function ElearningHeroIllustration({ sx, ...other }: BoxProps) {
       }}
       {...other}
     >
-      <Box sx={{ position: 'absolute', right: 0, bottom: 28, zIndex: 8 }}>
-        <img alt="light" src="/assets/images/course/backgroundman.png" style={{width: "100%", height: "100%" , objectFit:"cover",borderBottomLeftRadius: '50%',
+      <Box sx={{ position: 'absolute', right: 10, bottom: 28, zIndex: 8 }}>
+        <img alt="light" src="/assets/images/course/backgroundnew.png" style={{width: "100%", height: "100%" , objectFit:"cover",borderBottomLeftRadius: '50%',
       borderBottomRightRadius: '50%',}}/>
      
       </Box>
 
-      <Box
+      {/* <Box
         {...varDown}
         component={m.div}
         sx={{ position: 'absolute', left: 115, bottom: 115, zIndex: 8 }}
@@ -82,7 +82,7 @@ function ElearningHeroIllustration({ sx, ...other }: BoxProps) {
           src="/assets/icons/ic_book.png"
           sx={{ width: 52, height: 62 }}
         />
-      </Box>
+      </Box> */}
 
       <Box
         {...varRight}
@@ -93,10 +93,23 @@ function ElearningHeroIllustration({ sx, ...other }: BoxProps) {
    
       </Box>
 
-      <Box
+   
+
+      {/* Icon */}
+
+      {/* <Box
+        {...varLeft}
+        component={m.div}
+        sx={{ top: 88, right: 72, zIndex: 8, position: 'absolute' }}
+      >
+         <img alt="python" src="https://w7.pngwing.com/pngs/852/798/png-transparent-symbol-yellow-orange-line-keychainaccess-orange-preview-pages.png" style={{width: 56, height: 56 }}/>
+  
+      </Box> */}
+
+<Box
         {...varUp}
         component={m.div}
-        sx={{ zIndex: 9, left: 120, bottom: 168, position: 'absolute' }}
+        sx={{ top: 8, right: 50, zIndex: 8, position: 'absolute' }}
       >
         <Label
           text="PKI"
@@ -115,26 +128,13 @@ function ElearningHeroIllustration({ sx, ...other }: BoxProps) {
         />
       </Box>
 
-      {/* Icon */}
-
-      <Box
-        {...varLeft}
-        component={m.div}
-        sx={{ top: 88, right: 72, zIndex: 8, position: 'absolute' }}
-      >
-         <img alt="python" src="https://w7.pngwing.com/pngs/852/798/png-transparent-symbol-yellow-orange-line-keychainaccess-orange-preview-pages.png" style={{width: 56, height: 56 }}/>
-  
-      </Box>
-
-
-
-      <Box {...varUp} component={m.div} sx={{ zIndex: 8, right: 90, position: 'absolute' }}>
+      {/* <Box {...varUp} component={m.div} sx={{ zIndex: 8, right: 10, position: 'absolute' }}>
         <Icon
           color={PURPLE}
           content={<Typography sx={{ ...styleIconContent, color: 'common.white' }}>Cma</Typography>}
           sx={{ transform: 'scale(1.2) translateY(20px) rotate(15deg)' }}
         />
-      </Box>
+      </Box> */}
 
       <Box {...varDown} component={m.div} sx={{ zIndex: 8, position: 'absolute' }}>
         <Icon
@@ -146,6 +146,7 @@ function ElearningHeroIllustration({ sx, ...other }: BoxProps) {
 
       <Pattern01 sx={{ left: 0, top: 0 }} />
       <Pattern02 sx={{ top: 0, left: 0, opacity: 0.24, transform: 'scale(1.2)' }} />
+      <Shape sx={{ position: 'absolute', right: 32, bottom: 32 }} />
     </Box>
   );
 }
