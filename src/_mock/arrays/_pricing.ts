@@ -50,36 +50,25 @@ export const _pricingHome = [
 
 export const _pricingMarketing = [
   {
-    license: 'Basic',
-    price: '29',
-    icon: '/assets/icons/pricing/ic_plan_basic03.svg',
-    caption: 'Proin viverra, ligula sit amet ultrices semper, ligula arcu tristique sapien',
-    options: ['Auto update mode', 'Online operator 24/7', 'International posting'],
+    license: 'E-invoice',
+    price: 'Free',
+    icon: 'basil:invoice-solid',
+    caption: 'Certificate for e-invoicing. Requires TIN and System ID.',
+    options: ['Organization Name', 'Taxpayer Identification Number (TIN)', 'Business/Branch Name', 'System ID', 'CSR File Upload'],
   },
   {
-    license: 'Starter',
-    price: '59',
-    icon: '/assets/icons/pricing/ic_plan_starter03.svg',
-    caption: 'Sed lectus. Sed consequat, leo eget bibendum sodales',
-    options: [
-      'Auto update mode',
-      'Online operator 24/7',
-      'Unique newsletters',
-      'International posting',
-    ],
+    license: 'Digital Signature',
+    price: 'Free',
+    icon: 'fluent:document-signature-28-filled',
+    caption: 'Certificate for digital signing. Requires full name and email.',
+    options: ['Full Name', 'E-mail', 'State', 'Country', 'CSR File Upload'],
   },
   {
-    license: 'Premium',
-    price: '99',
-    icon: '/assets/icons/pricing/ic_plan_premium03.svg',
-    caption: 'Maecenas nec odio et ante tincidunt tempus.',
-    options: [
-      'Auto update mode',
-      'Online operator 24/7',
-      'Unique newsletters',
-      'International posting',
-      '20 Design templates',
-    ],
+    license: 'E-mail Security',
+    price: 'Free',
+    icon: 'lets-icons:e-mail',
+    caption: 'Certificate for email encryption. Requires full name and email.',
+    options: ['Full Name', 'E-mail', 'State', 'Country', 'CSR File Upload'],
   },
 ];
 

@@ -1,10 +1,14 @@
 "use client"
 import LandingHero from "@/Components/Hero";
+import PricingMarketing from "@/Components/pricing";
 import { HEADER } from "@/config-global";
 import Header from "@/Header";
 import { Box, Typography ,useTheme} from "@mui/material";
-import Image from "next/image";
-// import { useRouter } from 'next/navigation';
+
+import { _pricingMarketing } from "@/_mock";
+import MarketingLandingFaqs from "@/Components/FAQ";
+import Summary from "@/Components/Summary";
+;
 export default function Home() {
   const theme=useTheme();
   // const { pathname } = useRouter();
@@ -22,6 +26,9 @@ export default function Home() {
       >
    
         <LandingHero />
+        <Summary/>
+        <PricingMarketing plans={_pricingMarketing}/>
+        <MarketingLandingFaqs/>
 
         {/* <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000 }}></Box> */}
       </Box>

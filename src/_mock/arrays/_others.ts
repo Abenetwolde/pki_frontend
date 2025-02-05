@@ -116,16 +116,16 @@ export const _brandsColor = BRANDS_NAME.map((brand, index) => ({
 // ----------------------------------------------------------------------
 
 export const _faqs = [
-  'Sed augue ipsum, egestas nec, vestibulum et',
-  'alesuada adipiscing, dui vestibulum suscipit nulla quis orci.',
-  'Ut varius tincidunt libero',
-  'In ut quam vitae odio lacinia tincidunt.',
+  'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
+  'Lorem Ipsum is simply dummy text of the printing .',
+  'What is Lorem Ipsum?',
+  'Lorem Ipsum is simply dummy text of the printing and typesetting industryt.',
   'Fusce vel dui Morbi nec metus.',
 ].map((question, index) => ({
   id: _mock.id(index),
   question,
   answer:
-    'Amazing experience i love it a lot. Thanks to the team that dreams come true, great! I appreciate there attitude and approach.',
+    'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
 }));
 
 export const _faqsSupport = [
