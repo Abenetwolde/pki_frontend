@@ -52,21 +52,21 @@ export default function Header() {
        <img src={logo.src} alt="logo" width="60" />
             </Box>
   
-            {isMdUp && <NavDesktop data={navConfig} />}
+      
   
             <Stack
-              spacing={2}
+              spacing={5}
               flexGrow={1}
               direction="row"
               alignItems="center"
               justifyContent="flex-end"
             >
-   
+         {isMdUp && <NavDesktop data={navConfig} />}
               {isMdUp && (
                 <Button
                   variant="contained"
                   color="inherit"
-                  href={"/buy-now"}
+                  href={"/"}
                   target="_blank"
                   rel="noopener"
                 >

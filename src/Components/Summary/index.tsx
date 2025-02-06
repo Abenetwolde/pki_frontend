@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Typography, Container, Stack, Box, Card } from '@mui/material';
+import { Typography, Container, Stack, Box, Card, useTheme } from '@mui/material';
 import useResponsive from '@/hooks/useResponsive';
 import useBoundingClientRect from '@/hooks/useBoundingClientRect';
 import Iconify from '../iconify';
@@ -26,7 +26,7 @@ const SUMMARY = [
 
 export default function Summary() {
   const isMdUp = useResponsive('up', 'md');
-
+const theme=useTheme()
   const containerRef :any= useRef<HTMLDivElement>(null);
 
   const container = useBoundingClientRect(containerRef);
@@ -36,6 +36,7 @@ export default function Summary() {
   return (
     <Box
       sx={{
+backgroundColor: theme.palette.background.neutral,
         pt: { xs: 10, md: 15 },
         pb: { xs: 5, md: 10 },
       }}
@@ -54,7 +55,7 @@ export default function Summary() {
           }}
         >
           {SUMMARY.map((value) => (
-            <Stack key={value.title} alignItems={"center"} spacing={2}>
+            <Stack padding={4} key={value.title} alignItems={"center"} spacing={2} boxShadow={theme.customShadows.card}>
               {/* <SvgColor
                 src={value.icon}
                 sx={{ mb: 3, width: 64, height: 64, mx: 'auto', color: 'primary.main' }}

@@ -87,24 +87,22 @@ export const _offices = ['Jordan', 'Canada', 'Portugal'].map((office, index) => 
 // ----------------------------------------------------------------------
 
 const BRANDS_NAME = [
-  'airbnb',
-  'dropbox',
-  'facebook',
-  'google',
-  'heroku',
-  'lenovo',
-  'microsoft',
-  'netflix',
-  'slack',
-  'spotify',
-  'tripadvisor',
-  'vimeo',
+  
+  'https://th.bing.com/th/id/OIP.mkAAdlRdCqTFBFxG025OTQHaFX?w=698&h=506&rs=1&pid=ImgDetMain',
+  'https://businessguide.ezega.com/images/full/pict0-4351.jpg',
+  'https://th.bing.com/th/id/OIP.mkAAdlRdCqTFBFxG025OTQHaFX?w=698&h=506&rs=1&pid=ImgDetMain',
+  'https://businessguide.ezega.com/images/full/pict0-4351.jpg',
+  'https://th.bing.com/th/id/OIP.mkAAdlRdCqTFBFxG025OTQHaFX?w=698&h=506&rs=1&pid=ImgDetMain',
+  'https://businessguide.ezega.com/images/full/pict0-4351.jpg',
+  'https://th.bing.com/th/id/OIP.mkAAdlRdCqTFBFxG025OTQHaFX?w=698&h=506&rs=1&pid=ImgDetMain',
+  'https://businessguide.ezega.com/images/full/pict0-4351.jpg',
+
 ];
 
 export const _brands = BRANDS_NAME.map((brand, index) => ({
   id: _mock.id(index),
   name: brand,
-  image: `/assets/logo/${brand}.svg`,
+  image: brand,
 }));
 
 export const _brandsColor = BRANDS_NAME.map((brand, index) => ({

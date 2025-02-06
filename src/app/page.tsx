@@ -8,7 +8,12 @@ import { Box, Typography ,useTheme} from "@mui/material";
 import { _pricingMarketing } from "@/_mock";
 import MarketingLandingFaqs from "@/Components/FAQ";
 import Summary from "@/Components/Summary";
-;
+import Steps from "@/Components/Steps";
+import Connections from "@/Components/Connections";
+;import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { _brands } from "@/_mock";
+import Footer from "@/Components/Footer";
 export default function Home() {
   const theme=useTheme();
   // const { pathname } = useRouter();
@@ -26,17 +31,22 @@ export default function Home() {
       >
    
         <LandingHero />
+        <div id="summary">
         <Summary/>
+        </div>
+        <Connections brands={_brands}/>
+        
+        <Steps/>
+        <div id="Apply">
         <PricingMarketing plans={_pricingMarketing}/>
+        </div>
+        <div id="FAQ">
         <MarketingLandingFaqs/>
-
+</div>
         {/* <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000 }}></Box> */}
       </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column', height: 10 }}>
-        <Typography variant="h1">Footer</Typography>
-        {/* <Image src="/assets/background/overlay_1.jpg" alt="Picture of the author" width={500} height={500} /> */}
-      </Box>
-      {/* <Footer /> */}
+ 
+      <Footer />
     </Box>
   );
 }

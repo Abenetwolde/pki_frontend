@@ -46,7 +46,7 @@ export const NavItem = forwardRef<HTMLDivElement, any>(
 
     // Default
     return (
-      <Link component={NextLink} href={path} color="inherit" underline="none">
+      <Link /* component={NextLink} href={path} */ color="inherit" underline="none">
         {renderContent}
       </Link>
     );

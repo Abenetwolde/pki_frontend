@@ -17,12 +17,10 @@ export const pageLinks = [
 ]
 
 export const navConfig = [
-  { title: 'Page 1', path: '/' },
-  { title: 'Page 2', path: "compoent" },
-  {
-    title: 'Pages',
-    path: "pages",
-    children: [pageLinks[0]],
-  },
+
+  { title: 'Summary', path: "summary" },
+  { title: 'Apply', path: "Apply" },
+  { title: 'FAQ', path: "FAQ" },
+ 
 
 ];

@@ -29,13 +29,24 @@ export default function NavList({ item }: NavListProps) {
 //   const { isExternalLink } = useActiveLink(path);
 
   const [open, setOpen] = useState(false);
+  const handleClick = () => {
+    if (children) {
+      setOpen(!open);
+    } else {
+      const section = document.getElementById(path);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
+
 
   return (
     <>
       <NavItem
         item={item}
         open={open}
-        onClick={() => setOpen(!open)}
+        onClick={handleClick} 
         // active={pathname === path}
         // isExternalLink={isExternalLink}
       />
