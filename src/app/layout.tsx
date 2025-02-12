@@ -5,7 +5,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/theme";
 import MotionLazyContainer from "./MotionLazyContainer";
-
+;import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 
 const geistSans = Geist({

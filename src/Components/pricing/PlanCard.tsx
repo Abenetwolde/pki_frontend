@@ -1,6 +1,7 @@
 // @mui
-import { Card, Stack, Button, Typography } from '@mui/material';
-
+"use client"
+import { Card,  Button, Typography } from '@mui/material';
+import {  Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from '@mui/material';
 //
 // import Image from 'src/components/image';
 // import Label from 'src/components/label';
@@ -8,8 +9,12 @@ import { Card, Stack, Button, Typography } from '@mui/material';
 import Image from '../image';
 import Iconify from '../iconify';
 import Label from '../label';
+import { useState } from 'react';
+import RequestForm from '../RequestForm';
 
 export default function PlanCard({ plan }: any) {
+  const [open, setOpen] = useState(false);
+
   const { license, icon, options, price, caption } = plan;
 console.log(`PlanCard: plan: ${JSON.stringify(plan)}`);
   const basicLicense = license === 'E-invoice';
@@ -17,8 +22,15 @@ console.log(`PlanCard: plan: ${JSON.stringify(plan)}`);
   const starterLicense = license === 'Digital Signature';
 
   const premiumLicense = license === 'E-mail Security';
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
+    <>
     <Card
       sx={{
         p: 5,
@@ -60,9 +72,18 @@ console.log(`PlanCard: plan: ${JSON.stringify(plan)}`);
         size="large"
         color={'inherit'}
         variant={ 'contained'}
+        onClick={handleClickOpen}
       >
         Choose Certification
       </Button>
     </Card>
+ 
+    <Dialog fullWidth={true} fullScreen={false} maxWidth="lg" open={open} onClose={handleClose}>
+        <DialogTitle>Certification Form</DialogTitle>
+        <DialogContent sx={{padding:5}}>
+     <RequestForm/>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

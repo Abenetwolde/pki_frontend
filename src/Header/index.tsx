@@ -11,75 +11,80 @@ import useResponsive from '@/hooks/useResponsive';
 import NavMobile from './mobile';
 import logo from './insalogo.png'
 type Props = {
-    isOffset: boolean;
-  };
-  
-export default function Header() {
-    const theme = useTheme();
-  
-     const isMdUp = useResponsive('up', 'md');
+  isOffset: boolean;
+};
 
-    const isOffset = useOffSetTop();
-    // const isOffset = false
-    return (
-      <AppBar  color="transparent" sx={{ boxShadow: 'none' }}>
-        <Toolbar
-      
-          disableGutters
-          sx={{
+export default function Header() {
+  const theme = useTheme();
+
+  const isMdUp = useResponsive('up', 'md');
+
+  const isOffset = useOffSetTop();
+  // const isOffset = false
+  return (
+    <AppBar color="transparent" sx={{ boxShadow: 'none' }}>
+      <Toolbar
+
+        disableGutters
+        sx={{
+          height: {
+            xs: HEADER.H_MOBILE,
+            md: HEADER.H_MAIN_DESKTOP,
+          },
+          transition: theme.transitions.create(['height', 'background-color'], {
+            easing: theme.transitions.easing.easeInOut,
+            duration: theme.transitions.duration.shorter,
+          }),
+          // ...(headerOnDark && {
+          //   color: 'common.white',
+          // }),
+          ...(isOffset && {
+            ...bgBlur({ color: theme.palette.background.default }),
+            color: 'text.primary',
             height: {
-              xs: HEADER.H_MOBILE,
-              md: HEADER.H_MAIN_DESKTOP,
+              md: HEADER.H_MAIN_DESKTOP - 16,
             },
-            transition: theme.transitions.create(['height', 'background-color'], {
-              easing: theme.transitions.easing.easeInOut,
-              duration: theme.transitions.duration.shorter,
-            }),
-            // ...(headerOnDark && {
-            //   color: 'common.white',
-            // }),
-            ...(isOffset && {
-              ...bgBlur({ color: theme.palette.background.default }),
-              color: 'text.primary',
-              height: {
-                md: HEADER.H_MAIN_DESKTOP - 16,
-              },
-            }),
-          }}
-        >
-          <Container  sx={{ height: 1, display: 'flex', alignItems: 'center',  }}>
-            <Box  sx={{flexGrow:1, lineHeight: 0, position: 'relative' }}>
-       <img src={logo.src} alt="logo" width="60" />
-            </Box>
-  
-      
-  
-            <Stack
-              spacing={5}
-              flexGrow={1}
-              direction="row"
-              alignItems="center"
-              justifyContent="flex-end"
-            >
-         {isMdUp && <NavDesktop data={navConfig} />}
-              {isMdUp && (
+          }),
+        }}
+      >
+        <Container sx={{ height: 1, display: 'flex', alignItems: 'center', }}>
+          <Box sx={{ flexGrow: 1, lineHeight: 0, position: 'relative' }}>
+            <img src={logo.src} alt="logo" width="60" />
+          </Box>
+
+
+
+          <Stack
+            spacing={5}
+            flexGrow={1}
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-end"
+          >
+            {isMdUp && <NavDesktop data={navConfig} />}
+            {isMdUp && (
+
+              <Link href="/register">
+
                 <Button
                   variant="contained"
                   color="inherit"
-                  href={"/"}
-                  target="_blank"
+                  // href={"/register"}
+                  // target="_blank"
                   rel="noopener"
                 >
                   Register Now
                 </Button>
-              )}
-            </Stack>
-  
-            {!isMdUp && <NavMobile data={navConfig} />}
-          </Container>
-        </Toolbar>
-  
-        {isOffset && <HeaderShadow />}
-      </AppBar>
-    );
-  }
+              </Link>
+            )}
+
+          </Stack>
+
+          {!isMdUp && <NavMobile data={navConfig} />}
+        </Container>
+      </Toolbar>
+
+      {isOffset && <HeaderShadow />}
+    </AppBar>
+  );
+}
