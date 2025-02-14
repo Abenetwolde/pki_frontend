@@ -1,13 +1,14 @@
 "use client"
 import type { Metadata } from "next";
-
+import { Provider } from 'react-redux';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/theme";
 import MotionLazyContainer from "./MotionLazyContainer";
 ;import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+// import { store } from "../../redux/store";
+import { store } from "@/redux/store";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,11 +36,14 @@ export default function RootLayout({
       <body
         // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+         <Provider store={store}>
               <ThemeProvider>
                 <MotionLazyContainer>
         {children}
         </MotionLazyContainer>
         </ThemeProvider>
+        </Provider>
+      );
       </body>
    
     </html>
