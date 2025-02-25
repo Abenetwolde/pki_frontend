@@ -9,34 +9,48 @@ import {  Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } 
 import Image from '../image';
 import Iconify from '../iconify';
 import Label from '../label';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RequestForm from '../RequestForm';
-
-export default function PlanCard({ plan }: any) {
+import { useGetFormsQuery } from '@/app/api';
+export default function PlanCard() {
   const [open, setOpen] = useState(false);
+  const { data, error, isLoading } = useGetFormsQuery();
+  const [selectedForm, setSelectedForm] = useState(null);
 
-  const { license, icon, options, price, caption } = plan;
-console.log(`PlanCard: plan: ${JSON.stringify(plan)}`);
-  const basicLicense = license === 'E-invoice';
 
-  const starterLicense = license === 'Digital Signature';
+  if (isLoading) return <Typography>Loading...</Typography>;
+  if (error) return <Typography>Error loading data</Typography>;
 
-  const premiumLicense = license === 'E-mail Security';
-  const handleClickOpen = () => {
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+  // useEffect(() => {
+  //   if (data && data.length > 0) {
+  //     setSelectedForm(data[0]); // Set first form as default
+  //   }
+  // }, [data]);
+
+  const handleClickOpen = (form:any) => {
+    setSelectedForm(form);
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-  };
+  }
   return (
     <>
+    {data?.map((form) => (
     <Card
       sx={{
         p: 5,
         pt: 8,
         boxShadow: (theme) => ({ md: theme.customShadows.z8 }),
-        ...(starterLicense && {
+        ...(1==1 && {
           boxShadow: (theme) => ({ md: theme.customShadows.z24 }),
         }),
       }}
@@ -46,44 +60,47 @@ console.log(`PlanCard: plan: ${JSON.stringify(plan)}`);
       <Stack direction="row" justifyContent="space-between">
         <div>
           <Typography variant="h4" component="div" sx={{ color: 'primary.inherit', mb: 2 }}>
-            {license}
+            {form?.name}
           </Typography>
 
         
         </div>
 
-        <Iconify color={"primary.main"} icon={icon} width={64} />
+        <Iconify color={"primary.main"} icon={form?.icon} width={64} />
       </Stack>
 
-      <Typography variant="body2" sx={{ color: 'text.secondary', mt: 3 }}>
-        {caption}
+    <Typography variant="body2" sx={{ color: 'text.secondary', mt: 3 }}>
+        {form?.description}
       </Typography>
-
+   
       <Stack spacing={2} sx={{ my: 5 }}>
-        {options.map((option:any) => (
-          <Stack key={option} direction="row" alignItems="center" sx={{ typography: 'body2' }}>
-            <Iconify icon="carbon:checkmark" sx={{ mr: 2, color: 'primary.main' }} /> {option}
+            {form?.FormFields.map((field) => (
+              <Stack key={field.field_id} direction="row" alignItems="center" sx={{ typography: 'body2' }}>
+                <Iconify icon="carbon:checkmark" sx={{ mr: 2, color: 'primary.main' }} /> {field.field_name} 
+              </Stack>
+            ))}
           </Stack>
-        ))}
-      </Stack>
+
 
       <Button
         fullWidth
         size="large"
         color={'inherit'}
         variant={ 'contained'}
-        onClick={handleClickOpen}
+        onClick={() => handleClickOpen(form)}
       >
         Choose Certification
       </Button>
     </Card>
- 
-    <Dialog fullWidth={true} fullScreen={false} maxWidth="lg" open={open} onClose={handleClose}>
-        <DialogTitle>Certification Form</DialogTitle>
-        <DialogContent sx={{padding:5}}>
-     <RequestForm/>
-        </DialogContent>
-      </Dialog>
+       ))}
+      {selectedForm && (
+        <Dialog fullWidth maxWidth="lg" open={open} onClose={handleClose}>
+          <DialogTitle>{selectedForm?.name}</DialogTitle>
+          <DialogContent sx={{ padding: 5 }}>
+            <RequestForm formData={selectedForm} />
+          </DialogContent>
+        </Dialog>
+      )}
     </>
   );
 }

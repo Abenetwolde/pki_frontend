@@ -3,15 +3,13 @@ import * as Yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState, useEffect } from 'react';
-import { useGetFormByIdQuery } from '@/app/api';
-// @mui
-
 import { Box, Typography, TextField } from '@mui/material';
 import FormProvider from '../hook-form/FormProvider';
 import { RHFTextField } from '../hook-form';
 import { LoadingButton, Skeleton } from '@mui/lab';
-// ----------------------------------------------------------------------
+import { usePostFormRegistrationMutation } from '@/app/api';
 
+// Define types
 type FormField = {
   field_id: number;
   form_id: number;
@@ -31,14 +29,17 @@ type FormData = {
   form_fields: FormField[];
 };
 
-export default function RequestForm() {
-  const { data, error,isLoading } = useGetFormByIdQuery(1);
+interface RequestFormProps {
+  formData: FormData;
+}
+
+export default function RequestForm({ formData }: RequestFormProps) {
   const [formSchema, setFormSchema] = useState<Yup.ObjectSchema<any>>({});
   const [defaultValues, setDefaultValues] = useState<Record<string, any>>({});
 
   useEffect(() => {
-    if (data) {
-      const formFields: FormField[] = data?.form_fields;
+    if (formData) {
+      const formFields: FormField[] = formData?.FormFields;
       const schema: Record<string, any> = {};
       const defaults: Record<string, any> = {};
 
@@ -52,7 +53,7 @@ export default function RequestForm() {
       setFormSchema(Yup.object().shape(schema));
       setDefaultValues(defaults);
     }
-  }, [data]);
+  }, [formData]);
 
   const methods = useForm({
     resolver: yupResolver(formSchema),
@@ -60,51 +61,38 @@ export default function RequestForm() {
   });
 
   const {
-    reset,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-
-  const onSubmit = async (data: Record<string, any>) => {
+  const [postFormRegistration, { isLoading, error }] = usePostFormRegistrationMutation();
+  const onSubmit = async (data:any) => {
+    // event.preventDefault();
+console.log("data..........",data)
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      reset();
-      console.log('DATAssssssssssss', data);
+      const formValues = data;
+      const requestData = {
+        request_type: 'Revocation',
+        form_id: formData.form_id,
+        form_data: formValues,
+        csr: 'some-csr-token',  // Replace with actual CSR token
+        status: 'pending',  // Or other status based on your logic
+      };
+      try {
+        const response = await postFormRegistration(requestData).unwrap();
+        console.log('Form submitted successfully:', response);
+      } catch (err) {
+        console.error('Form submission failed:', err);
+      }
+
     } catch (error) {
       console.error(error);
     }
   };
 
-  if (isLoading) {
-    return (
-      <Box padding={5}>
-        <Typography variant="h5" sx={{ mb: 3 }}>
-          <Skeleton height={40} width="60%" />
-        </Typography>
-        <Box
-          rowGap={2.5}
-          columnGap={2}
-          display="grid"
-          gridTemplateColumns={{ xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
-        >
-          {[...Array(6)].map((_, index) => (
-            <Box key={index}>
-              <Skeleton width="40%" height={40} />
-              <Skeleton variant="rectangular" height={56} />
-            </Box>
-          ))}
-        </Box>
-        <Skeleton  width="20%" variant="rectangular" height={56} sx={{ mt: 5 }} />
-      </Box>
-    );
-  }
-
-  if (error) return <div>Error loading form</div>;
-
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Typography variant="h5" sx={{ mb: 3 }}>
-        {data?.name}
+        {formData?.name}
       </Typography>
 
       <Box
@@ -113,29 +101,29 @@ export default function RequestForm() {
         display="grid"
         gridTemplateColumns={{ xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
       >
-         {data?.form_fields.map((field: FormField) => (
+        {formData?.FormFields?.map((field: FormField) => (
           <RHFTextField
             key={field.field_id}
-            name={field.field_name}
-            label={field.field_name}
-            type={field.field_type}
-            required={field.is_required}
+            name={field?.field_name}
+            label={field?.field_name}
+            type={field?.field_type}
+            required={field?.is_required}
             fullWidth
           />
         ))}
       </Box>
-<Box sx={{ mt: 3 }}>
-<LoadingButton
-        color="inherit"
-        size="large"
-        type="submit"
-        variant="contained"
-        loading={isSubmitting}
-      >
-        Register
-      </LoadingButton>
-</Box>
-      
+
+      <Box sx={{ mt: 3 }}>
+        <LoadingButton
+          color="inherit"
+          size="large"
+          type="submit"
+          variant="contained"
+          loading={isSubmitting}
+        >
+          Register
+        </LoadingButton>
+      </Box>
     </FormProvider>
   );
 }

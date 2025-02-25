@@ -38,7 +38,7 @@ export default function Home() {
         
         <Steps/>
         <div id="Apply">
-        <PricingMarketing plans={_pricingMarketing}/>
+        <PricingMarketing/>
         </div>
         <div id="FAQ">
         <MarketingLandingFaqs/>

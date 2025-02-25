@@ -51,9 +51,9 @@ export default function PricingMarketing({ plans }: any) {
           },
         }}
       >
-        {plans.map((plan:any) => (
-          <PlanCard key={plan.license} plan={plan} />
-        ))}
+   
+          <PlanCard  />
+  
       </Box>
     </Container>
   );
