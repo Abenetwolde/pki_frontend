@@ -73,7 +73,7 @@ export default function Header() {
                   // target="_blank"
                   rel="noopener"
                 >
-                  Register Now
+                Sign Up/ Sign In
                 </Button>
               </Link>
             )}

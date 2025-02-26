@@ -17,10 +17,11 @@ export const pageLinks = [
 ]
 
 export const navConfig = [
-
-  { title: 'Summary', path: "summary" },
-  { title: 'Apply', path: "Apply" },
+  { title: 'Home', path: "/" },
+  { title: 'Guidelines for Requesting', path: "summary" },
+  { title: 'Certificate Application', path: "Apply" },
   { title: 'FAQ', path: "FAQ" },
+  
  
 
 ];

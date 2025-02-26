@@ -11,17 +11,10 @@ export const formApi = createApi({
       query: () => `forms`,
     }),
     postFormRegistration: builder.mutation({
-      query: (formData) => ({
+      query: (newRequest) => ({
         url: 'requests',
         method: 'POST',
-        body: {
-          user_id: 1,  // Static user_id as per your request
-          form_id: formData.form_id,
-          form_data: formData.form_data||"",
-          csr: formData.csr||"",  // Assuming csr is passed as part of formData
-          status: formData.status||"",
-          request_type: formData.request_type||"",
-        },
+        body:newRequest
       }),
     }),
   })

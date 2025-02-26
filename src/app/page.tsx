@@ -29,14 +29,16 @@ export default function Home() {
           flexGrow: 1,
         }}
       >
-   
+           <div id="/">
         <LandingHero />
-        <div id="summary">
-        <Summary/>
         </div>
-        <Connections brands={_brands}/>
+    
+        <Summary/>
         
+        <Connections brands={_brands}/>
+        <div id="summary">
         <Steps/>
+        </div>
         <div id="Apply">
         <PricingMarketing/>
         </div>
