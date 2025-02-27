@@ -28,6 +28,7 @@
     "react-redux": "^7.2.9",
     "react-slick": "^0.30.3",
     "slick-carousel": "^1.8.1",
+    "sonner": "^2.0.1",
     "yup": "^1.6.1"
   },
   "devDependencies": {

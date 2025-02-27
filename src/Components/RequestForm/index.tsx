@@ -8,7 +8,7 @@ import FormProvider from '../hook-form/FormProvider';
 import { RHFTextField } from '../hook-form';
 import { LoadingButton, Skeleton } from '@mui/lab';
 import { usePostFormRegistrationMutation } from '@/app/api';
-
+import { toast, Toaster } from "sonner"; 
 import Iconify from '../iconify';
 // Define types
 type FormField = {
@@ -38,6 +38,7 @@ export default function RequestForm({ formData }: RequestFormProps) {
   const [formSchema, setFormSchema] = useState<Yup.ObjectSchema<any>>({});
   const [defaultValues, setDefaultValues] = useState<Record<string, any>>({});
   const [selectedFiles, setSelectedFiles] = useState<Record<string, File | null>>({});
+  const [submissionStatus, setSubmissionStatus] = useState<"idle" | "success" | "error">("idle");
   useEffect(() => {
     if (formData) {
       const formFields: FormField[] = formData?.FormFields;
@@ -70,49 +71,47 @@ export default function RequestForm({ formData }: RequestFormProps) {
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-  const [postFormRegistration, { isLoading, error }] = usePostFormRegistrationMutation();
+  const [postFormRegistration, { isLoading, isSuccess, isError, error }] =
+  usePostFormRegistrationMutation();
+
   const onSubmit = async (data:any) => {
     // event.preventDefault();
+    setSubmissionStatus("idle"); // Reset status
+    const toastId = toast.loading("Submitting your request...");
     const formDataToSend = new FormData();
-    // formDataToSend.append('user_id', '1');
-    // formDataToSend.append('request_type', 'Revocation');
-    // formDataToSend.append('form_id', formData.form_id.toString());
-    // formDataToSend.append('csr', 'some-csr-token'); // Replace with actual CSR token
-    // formDataToSend.append('status', 'pending'); // Or other status based on your logic
-    console.log('selectedFiles', selectedFiles);
+    formDataToSend.append('user_id', '1');
+    formDataToSend.append('request_type', 'Revocation');
+    formDataToSend.append('form_id', formData.form_id.toString());
+ 
     Object.keys(data).forEach((key) => {
-      // console.log('selectedFiles[key]:', selectedFiles[key]);
-      if (selectedFiles) {
-       
+      formDataToSend.append(key, data[key]);
+    });
+  
+    // Append file fields from selectedFiles
+    Object.keys(selectedFiles).forEach((key) => {
+      if (selectedFiles[key]) {
+        console.log(`Appending file for ${key}:`, selectedFiles[key]);
         formDataToSend.append(key, selectedFiles[key] as File);
-      } else {
-           
-        // formDataToSend.append(key, selectedFiles[key] as File);
-        formDataToSend.append(key, data[key]);
       }
     });
     for (let [key, value] of formDataToSend.entries()) {
       console.log(`${key}: ${value}`);
     }
     try {
-      // const formValues = data;
-      // const requestData = {
-      //   request_type: 'Revocation',
-      //   form_id: formData.form_id,
-      //   form_data: formValues,
-      //   csr: 'some-csr-token',  // Replace with actual CSR token
-      //   status: 'pending',  // Or other status based on your logic
-      // };
-      try {
+    
         const response = await postFormRegistration(formDataToSend).unwrap();
-        console.log('Form submitted successfully:', response);
-      } catch (err) {
-        console.error('Form submission failed:', err);
+        toast.dismiss(toastId);
+        toast.success("Request submitted successfully!");
+        setSubmissionStatus("success");
+        // reset(); // Optionally reset the form
+        setSelectedFiles({}); // Clear file selections
+      } catch (err: any) {
+        toast.dismiss(toastId);
+        toast.error(`Submission failed: ${err?.data?.message || "Unknown error"}`);
+        setSubmissionStatus("error");
+        console.error("Form submission failed:", err);
       }
-
-    } catch (error) {
-      console.error(error);
-    }
+    
   };
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -213,11 +212,12 @@ export default function RequestForm({ formData }: RequestFormProps) {
           size="large"
           type="submit"
           variant="contained"
-          loading={isSubmitting}
+          loading={isLoading || isSubmitting}
         >
           Register
         </LoadingButton>
       </Box>
+      <Toaster position="top-right" richColors className="custom-toast" />
     </FormProvider>
   );
 }
