@@ -1,7 +1,8 @@
+// "use client"
 import { useTheme } from '@mui/material/styles';
 import { Box, Link, Stack, Button, AppBar, Toolbar, Container } from '@mui/material';
 import { HEADER } from '@/config-global';
-import NavDesktop from './NavDesktop';
+// import NavDesktop from './NavDesktop';
 import { navConfig } from './nav_config';
 import { bgBlur } from '@/utiles/cssStyles';
 import useOffSetTop from '@/hooks/useOffSetTop';
@@ -10,10 +11,11 @@ import HeaderShadow from './HeaderShadow';
 import useResponsive from '@/hooks/useResponsive';
 import NavMobile from './mobile';
 import logo from './insalogo.png'
+import dynamic from 'next/dynamic';
 type Props = {
   isOffset: boolean;
 };
-
+const NavDesktop = dynamic(() => import('@/Header/NavDesktop'), { ssr: false });
 export default function Header() {
   const theme = useTheme();
 
@@ -49,7 +51,11 @@ export default function Header() {
       >
         <Container sx={{ height: 1, display: 'flex', alignItems: 'center', }}>
           <Box sx={{ flexGrow: 1, lineHeight: 0, position: 'relative' }}>
-            <img src={logo.src} alt="logo" width="60" />
+          <Link href="/">
+ 
+      <img src={logo.src} alt="logo" width="60" />
+   
+  </Link>
           </Box>
 
 
@@ -62,21 +68,7 @@ export default function Header() {
             justifyContent="flex-end"
           >
             {isMdUp && <NavDesktop data={navConfig} />}
-            {isMdUp && (
-
-              <Link href="/register">
-
-                <Button
-                  variant="contained"
-                  color="inherit"
-                  // href={"/register"}
-                  // target="_blank"
-                  rel="noopener"
-                >
-                Sign Up/ Sign In
-                </Button>
-              </Link>
-            )}
+       
 
           </Stack>
 

@@ -9,6 +9,8 @@ import MotionLazyContainer from "./MotionLazyContainer";
 import "slick-carousel/slick/slick-theme.css";
 // import { store } from "../../redux/store";
 import { store } from "@/redux/store";
+import { usePathname } from "next/navigation";
+import Header from "@/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +32,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const isAuthPage = pathname === "/login"||pathname==="/register"||pathname==="/forget-password"||pathname==="/verify-code";
+
   return (
     <html lang="en">
 
@@ -38,6 +43,7 @@ export default function RootLayout({
       >
          <Provider store={store}>
               <ThemeProvider>
+              {!isAuthPage && <Header />}
                 <MotionLazyContainer>
         {children}
         </MotionLazyContainer>

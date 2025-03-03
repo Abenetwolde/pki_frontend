@@ -20,7 +20,7 @@ export default function Home() {
   return (
 
     <Box bgcolor={theme.palette.background.neutral} sx={{ display: 'flex', flexDirection: 'column', height: 1 }}>
-      <Header/>
+      {/* <Header/> */}
 
       <Box
       // bgcolor={theme.palette.background.neutral}
