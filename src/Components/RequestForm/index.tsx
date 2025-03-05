@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState, useEffect } from 'react';
-import { Box, Typography, TextField, Button } from '@mui/material';
+import { Box, Typography, TextField, Button, Tabs, Tab, Fade } from '@mui/material';
 import FormProvider from '../hook-form/FormProvider';
 import { RHFTextField } from '../hook-form';
 import { LoadingButton, Skeleton } from '@mui/lab';
@@ -32,6 +32,34 @@ type FormData = {
 
 interface RequestFormProps {
   formData: FormData;
+}
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+       
+      {value === index && (
+        <Fade in={value === index}>
+          <Box sx={{ p: 2 }}>
+            {children}
+          </Box>
+        </Fade>
+      )}
+    </div>
+  );
 }
 
 export default function RequestForm({ formData }: RequestFormProps) {
@@ -132,7 +160,33 @@ export default function RequestForm({ formData }: RequestFormProps) {
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
   return (
+    <Box sx={{ width: '100%' }}>
+           <Tabs value={value} onChange={handleChange} aria-label="request form tabs" TabIndicatorProps={{ style: { display: 'none' } }}>
+        <Tab label="Normal Certification"        sx={{
+            textTransform: 'none',
+            padding: '8px 16px',
+            minWidth: 'auto',
+            backgroundColor: value === 0 ? 'primary.main' : 'inherit',
+            color: value === 0 ? 'white' : 'inherit',
+            borderRadius: '4px',
+            // marginRight: '8px',
+          }}/>
+        <Tab label="Instant Certification"    sx={{
+            textTransform: 'none',
+            padding: '8px 16px',
+            minWidth: 'auto',
+            backgroundColor: value === 1 ? 'primary.main' : 'inherit',
+            color: value === 1 ? 'white' : 'inherit',
+            borderRadius: '4px',
+          }} />
+      </Tabs>
+      <TabPanel value={value} index={0}>
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Typography variant="h5" sx={{ mb: 3 }}>
         {formData?.name}
@@ -219,5 +273,21 @@ export default function RequestForm({ formData }: RequestFormProps) {
       </Box>
       <Toaster position="top-right" richColors className="custom-toast" />
     </FormProvider>
+    </TabPanel>
+    <TabPanel value={value} index={1}>
+        <Box component="form" sx={{ mt: 3 }}>
+          <TextField
+            fullWidth
+            label="Email"
+            type="email"
+            required
+            sx={{ mb: 3 }}
+          />
+          <Button variant="contained" color="primary" type="submit">
+            Send Request
+          </Button>
+        </Box>
+      </TabPanel>
+    </Box>
   );
 }
