@@ -35,13 +35,14 @@ export default function Home() {
     
         <Summary/>
         
-        <Connections brands={_brands}/>
+      
         <div id="summary">
         <Steps/>
         </div>
         <div id="Apply">
         <PricingMarketing/>
         </div>
+        <Connections brands={_brands}/>
         <div id="FAQ">
         <MarketingLandingFaqs/>
 </div>

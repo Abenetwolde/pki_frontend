@@ -9,6 +9,7 @@ import {
   Box,
   Divider,
   Button,
+  useMediaQuery,
 //    Grid,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
@@ -30,6 +31,7 @@ import Iconify from '../iconify';
 // import { PlayerDialog } from 'src/components/player';
 import { PlayerDialog } from '../player';
 import { HEADER } from '@/config-global';
+import ReactPlayer from 'react-player';
 
 // ----------------------------------------------------------------------
 
@@ -65,7 +67,7 @@ const theme=useTheme();
   const handleCloseVideo = () => {
     setOpenVideo(false);
   };
-
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <>
       {/* <Box
@@ -109,16 +111,26 @@ const theme=useTheme();
       </Typography>
 
       <Stack spacing={3} alignItems="center" direction={{ xs: 'column', md: 'row' }}>
-        <Button color="inherit" size="large" variant="contained">
+        {/* <Button color="inherit" size="large" variant="contained">
           Get Started
-        </Button>
-
-        <Stack direction="row" alignItems="center" sx={{ typography: 'h6' }}>
-          <Fab size="medium" color="info" onClick={handleOpenVideo} sx={{ mr: 1 }}>
-            <Iconify width={24} icon="carbon:play" />
-          </Fab>
-          Learn More
-        </Stack>
+        </Button> */}
+        <Box
+                    sx={{
+                      width: isSmallScreen ? '100%' : '300px',
+                      mt: 3,
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <ReactPlayer
+                      url="https://www.youtube.com/watch?v=ifbNTOzt1EY" // Replace with your YouTube video URL
+                      width="100%"
+                      height={isSmallScreen ? '200px' : '100%'}
+                      controls
+                      onClick={handleOpenVideo}
+                      style={{ cursor: 'pointer' }}
+                    />
+                  </Box>
       </Stack>
 
       <Divider sx={{ borderStyle: 'dashed', mt: 8, mb: 6 }} />
