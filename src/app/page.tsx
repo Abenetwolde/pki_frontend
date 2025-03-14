@@ -14,6 +14,7 @@ import Connections from "@/Components/Connections";
 import "slick-carousel/slick/slick-theme.css";
 import { _brands } from "@/_mock";
 import Footer from "@/Components/Footer";
+import ContactForm from "@/Components/ContactUs";
 export default function Home() {
   const theme=useTheme();
   // const { pathname } = useRouter();
@@ -48,7 +49,7 @@ export default function Home() {
 </div>
         {/* <Box sx={{ display: 'flex', flexDirection: 'column', height: 1000 }}></Box> */}
       </Box>
- 
+ <ContactForm/>
       <Footer />
     </Box>
   );

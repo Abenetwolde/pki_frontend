@@ -1,8 +1,11 @@
-// @mui
+"use client"
+import { useEffect, useRef } from 'react';
 import { Typography, Container, Button, Box } from '@mui/material';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Iconify from '../iconify';
 
-// ----------------------------------------------------------------------
+gsap.registerPlugin(ScrollTrigger);
 
 const STEPS = [
   {
@@ -22,15 +25,51 @@ const STEPS = [
   },
 ];
 
-// ----------------------------------------------------------------------
-
 export default function Steps() {
+  const containerRef = useRef(null);
+  const stepBoxesRef = useRef([]);
+
+  useEffect(() => {
+    stepBoxesRef.current.forEach((box, i) => {
+      gsap.fromTo(
+        box,
+        { y: 100, opacity: 0, scale: 0.8 },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1,
+          delay: i * 0.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: box,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+
+      gsap.to(box, {
+        // boxShadow: '0 5px 10px rgba(0,0,0,0.1)',
+        scale: 1.03,
+        duration: 0.5,
+        scrollTrigger: {
+          trigger: box,
+          start: 'top center',
+          toggleActions: 'play reverse play reverse',
+        },
+      });
+    });
+  }, []);
+
   return (
     <Box
+      ref={containerRef}
       sx={{
         textAlign: 'center',
         pt: { xs: 10, md: 15 },
         pb: { xs: 5, md: 10 },
+        bgcolor: 'transparent',
       }}
     >
       <Container>
@@ -58,13 +97,21 @@ export default function Steps() {
           }}
         >
           {STEPS.map((value, index) => (
-            <div key={value.title}>
+            <div
+              key={value.title}
+              className="step-box"
+              ref={(el) => (stepBoxesRef.current[index] = el)}
+              style={{
+                border: '2px solid rgba(0,0,0,0.05)',
+                borderRadius: '12px',
+                padding: '20px',
+                backgroundColor: 'white',
+                transition: 'all 0.4s ease-in-out',
+              }}
+            >
               <Iconify icon={value.icon} width={64} height={64} sx={{ mb: 3, mx: 'auto', color: 'primary.main' }} />
-              
-              <Typography
-                variant="overline"
-                sx={{ mt: 4, display: 'block', color: 'text.disabled' }}
-              >
+
+              <Typography variant="overline" sx={{ mt: 4, display: 'block', color: 'text.disabled' }}>
                 Step {index + 1}
               </Typography>
 
