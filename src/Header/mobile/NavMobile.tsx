@@ -3,8 +3,7 @@ import { useState, useEffect } from 'react';
 // import { useRouter } from 'next/router';
 // @mui
 import { List, Drawer, IconButton, Button, Stack, Box } from '@mui/material';
-// config
-// import { NAV } from 'src/config-global';
+import logo from '../logo.png'
 import { NAV } from '@/config-global';
 // components
 // import Logo from 'src/components/logo';
@@ -57,7 +56,7 @@ export default function NavMobile({ data }: any) {
         {/* <Scrollbar> */}
           <Box>
           {/* <Logo sx={{ mx: 2.5, my: 3 }} /> */}
-<p>logo</p>
+          <img src={logo.src} alt="logo" width="60" />
           <List component="nav" disablePadding>
             {data.map((link:any) => (
               <NavList key={link.title} item={link} />

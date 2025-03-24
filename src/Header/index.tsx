@@ -10,7 +10,7 @@ import Logo from '@/Components/logo/Logo';
 import HeaderShadow from './HeaderShadow';
 import useResponsive from '@/hooks/useResponsive';
 import NavMobile from './mobile';
-import logo from './insalogo.png'
+import logo from './logo.png'
 import dynamic from 'next/dynamic';
 type Props = {
   isOffset: boolean;
