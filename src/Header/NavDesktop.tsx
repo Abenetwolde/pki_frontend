@@ -1,17 +1,20 @@
-"use client"
-import { Button, Link, Stack, Avatar, Menu, MenuItem, Divider, Typography } from '@mui/material';
+"use client";
+import { Button, Link, Stack, Avatar, Menu, MenuItem, Divider, Typography } from "@mui/material";
+import NavList from "./NavList";
+import { useState } from "react";
+import Iconify from "@/Components/iconify";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux"; // Import useDispatch from react-redux
+// import { clearUserToken } from "@/path-to-your-userStore"; // Adjust the import path to your userStore file
 
-import NavList from './NavList';
-import { useState } from 'react';
-import Iconify from '@/Components/iconify';
-import { useRouter } from 'next/navigation'; // Import useRouter from Next.js
 // ----------------------------------------------------------------------
 
 export default function NavDesktop({ data, sx }: any) {
-  // State to manage the Menu's open/close and anchor element
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const router = useRouter();
+  const dispatch = useDispatch(); // Initialize useDispatch to dispatch Redux actions
+
   // Handle opening the menu
   const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -21,14 +24,22 @@ export default function NavDesktop({ data, sx }: any) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  // Handle navigation to dashboard
   const handleDashboard = () => {
     setAnchorEl(null); // Close the menu
-    router.push('/dashboard'); // Navigate to /dashboard route
-
+    router.push("/dashboard"); // Navigate to /dashboard route
   };
+
+  // Handle logout
+  const handleLogout = () => {
+    // dispatch(clearUserToken()); // Dispatch the clearUserToken action to clear Redux state and localStorage
+    setAnchorEl(null); // Close the menu
+    router.push("/login"); // Redirect to login page (adjust the route as needed)
+  };
+
   return (
     <Stack
-    
       component="nav"
       direction="row"
       spacing={6}
@@ -38,25 +49,19 @@ export default function NavDesktop({ data, sx }: any) {
         ...sx,
       }}
     >
-      {data.map((link:any) => (
+      {data.map((link: any) => (
         <NavList key={link.title} item={link} />
       ))}
-          <Link href="/register">
+      <Link href="/register">
+        <Button variant="contained" color="inherit" rel="noopener">
+          Sign Up / Sign In
+        </Button>
+      </Link>
 
-<Button
-  variant="contained"
-  color="inherit"
-  // href={"/register"}
-  // target="_blank"
-  rel="noopener"
->
-Sign Up/ Sign In
-</Button>
-</Link>
-{/* Avatar with 'A' */}
-<Avatar
-        sx={{ cursor: 'pointer', bgcolor: 'primary.main', color:"white" }} // Styling for the Avatar
-        onClick={handleAvatarClick} // Open menu on click
+      {/* Avatar with 'A' */}
+      <Avatar
+        sx={{ cursor: "pointer", bgcolor: "primary.main" }}
+        onClick={handleAvatarClick}
       >
         A
       </Avatar>
@@ -66,24 +71,27 @@ Sign Up/ Sign In
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} // Position below and to the right
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
         PaperProps={{
           sx: {
-            p: 2, // Padding all over the menu
-            minWidth: 200, // Minimum width for better appearance
+            p: 2,
+            minWidth: 200,
           },
         }}
       >
         {/* Dashboard Menu Item */}
-        <MenuItem    sx={{ cursor: 'pointer', bgcolor: 'primary.main', color:"white", }}  onClick={handleDashboard} >
-          <Iconify icon={"material-symbols:dashboard"} sx={{ mr: 2 }} />
+        <MenuItem
+          sx={{ cursor: "pointer", bgcolor: "primary.main", color: "white" }}
+          onClick={handleDashboard}
+        >
+          <Iconify icon="material-symbols:dashboard" sx={{ mr: 2 }} />
           <Typography>Dashboard</Typography>
         </MenuItem>
 
         {/* Logout Menu Item */}
-        <MenuItem onClick={handleClose} sx={{ py: 1 }}>
-          <Iconify icon={"material-symbols:logout"} sx={{ mr: 2 }} />
+        <MenuItem onClick={handleLogout} sx={{ py: 1 }}>
+          <Iconify icon="material-symbols:logout" sx={{ mr: 2 }} />
           <Typography>Logout</Typography>
         </MenuItem>
 

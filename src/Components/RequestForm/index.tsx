@@ -62,7 +62,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-export default function RequestForm({ formData }: RequestFormProps) {
+export default function RequestForm({ formData, close }: RequestFormProps) {
   const [formSchema, setFormSchema] = useState<Yup.ObjectSchema<any>>({});
   const [defaultValues, setDefaultValues] = useState<Record<string, any>>({});
   const [selectedFiles, setSelectedFiles] = useState<Record<string, File | null>>({});
@@ -110,7 +110,7 @@ export default function RequestForm({ formData }: RequestFormProps) {
     formDataToSend.append('user_id', '1');
     formDataToSend.append('request_type', 'Revocation');
     formDataToSend.append('form_id', formData.form_id.toString());
- 
+    formDataToSend.append('csr', data?.CERF.toString());
     Object.keys(data).forEach((key) => {
       formDataToSend.append(key, data[key]);
     });
@@ -133,12 +133,15 @@ export default function RequestForm({ formData }: RequestFormProps) {
         setSubmissionStatus("success");
         // reset(); // Optionally reset the form
         setSelectedFiles({}); // Clear file selections
+        close()
       } catch (err: any) {
         toast.dismiss(toastId);
         toast.error(`Submission failed: ${err?.data?.message || "Unknown error"}`);
         setSubmissionStatus("error");
         console.error("Form submission failed:", err);
+        close()
       }
+      
     
   };
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -237,7 +240,7 @@ export default function RequestForm({ formData }: RequestFormProps) {
                     type="file"
                     multiple={true}
                     hidden
-                    onChange={(event) => handleFileChange(event, field.field_name)}
+                    onChange={(event) => handleFileChange(event, "cert")}
                   />
                 </Button>
                 {selectedFiles[field.field_name] && (

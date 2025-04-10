@@ -97,7 +97,7 @@ export default function PlanCard() {
         <Dialog fullWidth maxWidth="lg" open={open} onClose={handleClose}>
           <DialogTitle>{selectedForm?.name}</DialogTitle>
           <DialogContent sx={{ padding: 5 }}>
-            <RequestForm formData={selectedForm} />
+            <RequestForm formData={selectedForm} close={handleClose} />
           </DialogContent>
         </Dialog>
       )}
