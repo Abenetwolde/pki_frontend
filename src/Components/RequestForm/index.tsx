@@ -110,7 +110,7 @@ export default function RequestForm({ formData, close }: RequestFormProps) {
     formDataToSend.append('user_id', '1');
     formDataToSend.append('request_type', 'Revocation');
     formDataToSend.append('form_id', formData.form_id.toString());
-    formDataToSend.append('csr', data?.CERF.toString());
+    formDataToSend.append('csr', data?.crf);
     Object.keys(data).forEach((key) => {
       formDataToSend.append(key, data[key]);
     });
