@@ -170,7 +170,7 @@ export default function RequestForm({ formData, close }: RequestFormProps) {
   };
   return (
     <Box sx={{ width: '100%' }}>
-           <Tabs value={value} onChange={handleChange} aria-label="request form tabs" TabIndicatorProps={{ style: { display: 'none' } }}>
+           {/* <Tabs value={value} onChange={handleChange} aria-label="request form tabs" TabIndicatorProps={{ style: { display: 'none' } }}>
         <Tab label="Normal Certification"        sx={{
             textTransform: 'none',
             padding: '8px 16px',
@@ -188,12 +188,12 @@ export default function RequestForm({ formData, close }: RequestFormProps) {
             color: value === 1 ? 'white' : 'inherit',
             borderRadius: '4px',
           }} />
-      </Tabs>
-      <TabPanel value={value} index={0}>
+      </Tabs> */}
+      {/* <TabPanel value={value} index={0}> */}
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Typography variant="h5" sx={{ mb: 3 }}>
-        {formData?.name}
-      </Typography>
+      {/* <Typography variant="h5" sx={{ mb: 3 }}>
+        {formData?.name}reter
+      </Typography> */}
 
       <Box
         rowGap={2.5}
@@ -271,13 +271,13 @@ export default function RequestForm({ formData, close }: RequestFormProps) {
           variant="contained"
           loading={isLoading || isSubmitting}
         >
-          Register
+          Submit
         </LoadingButton>
       </Box>
       <Toaster position="top-right" richColors className="custom-toast" />
     </FormProvider>
-    </TabPanel>
-    <TabPanel value={value} index={1}>
+    {/* </TabPanel> */}
+    {/* <TabPanel value={value} index={1}>
         <Box component="form" sx={{ mt: 3 }}>
           <TextField
             fullWidth
@@ -290,7 +290,7 @@ export default function RequestForm({ formData, close }: RequestFormProps) {
             Send Request
           </Button>
         </Box>
-      </TabPanel>
+      </TabPanel> */}
     </Box>
   );
 }
