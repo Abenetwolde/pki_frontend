@@ -32,7 +32,8 @@ import Iconify from '../iconify';
 import { PlayerDialog } from '../player';
 import { HEADER } from '@/config-global';
 import ReactPlayer from 'react-player';
-
+import React, { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 // ----------------------------------------------------------------------
 
 const SUMMARY = [
@@ -68,6 +69,119 @@ const theme=useTheme();
     setOpenVideo(false);
   };
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const edge1Ref = useRef(null);
+  const middleRef = useRef(null);
+  const edge2Ref = useRef(null);
+  const allWordsRef = useRef([]);
+
+  const secureRef = useRef(null);
+  const word1Ref = useRef(null);
+  const word2Ref = useRef(null);
+  const word3Ref = useRef(null);
+  const authRef = useRef(null);
+  const trustRef = useRef(null);
+  const middleContainerRef = useRef(null);
+
+  useEffect(() => {
+    // Initially set up the middle words to be hidden except for "Authenticate", which forms the initial sentence
+    gsap.set([word1Ref.current, word2Ref.current, word3Ref.current], { opacity: 0, y: 0 });
+    gsap.set(authRef.current, { opacity: 1, y: 0 });
+
+    // Position edge words to form a readable sentence initially
+    gsap.set(secureRef.current, { x: -20 });
+    gsap.set(trustRef.current, { x: 20 });
+
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+
+    // Edge words move apart with a smaller distance for a reduced gap
+    tl.to(secureRef.current, {
+      x: -70,
+      duration: 0.8,
+      ease: 'power3.out',
+    }, 0)
+    .to(trustRef.current, {
+      x: 70,
+      duration: 0.8,
+      ease: 'power3.out',
+    }, 0);
+
+    // Start scrolling middle words immediately as edge words scatter
+    tl.to(word1Ref.current, {
+      opacity: 1,
+      duration: 0.1,
+      ease: 'power2.inOut',
+    }, 0) // Start at the same time as edge words scatter
+    .to(authRef.current, {
+      opacity: 0, // Hide "Authenticate" to make way for "Identity"
+      duration: 0.1,
+      ease: 'power2.inOut',
+    }, 0)
+    .to(word1Ref.current, {
+      y: -50,
+      opacity: 0,
+      duration: 0.3,
+      ease: 'power3.inOut',
+    }, '+=0.05');
+
+    tl.to(word2Ref.current, {
+      opacity: 1,
+      duration: 0.1,
+      ease: 'power2.inOut',
+    }, '-=0.1')
+    .to(word2Ref.current, {
+      y: -50,
+      opacity: 0,
+      duration: 0.3,
+      ease: 'power3.inOut',
+    }, '+=0.05');
+
+    tl.to(word3Ref.current, {
+      opacity: 1,
+      duration: 0.1,
+      ease: 'power2.inOut',
+    }, '-=0.1')
+    .to(word3Ref.current, {
+      y: -50,
+      opacity: 0,
+      duration: 0.3,
+      ease: 'power3.inOut',
+    }, '+=0.05');
+
+    tl.to(authRef.current, {
+      opacity: 1,
+      duration: 0.1,
+      ease: 'power2.inOut',
+    }, '-=0.1')
+    .to(authRef.current, {
+      y: -50,
+      opacity: 0,
+      duration: 0.3,
+      ease: 'power3.inOut',
+    }, '+=0.05');
+
+    // When "Authenticate" appears, edge words bounce back in
+    tl.to(authRef.current, {
+      y: 0,
+      opacity: 1,
+      duration: 0.2,
+      ease: 'power2.inOut',
+    })
+    .to(secureRef.current, {
+      x: -40,
+      duration: 0.8,
+      ease: 'power3.inOut',
+    }, '<')
+    .to(trustRef.current, {
+      x: 40,
+      duration: 0.8,
+      ease: 'power3.inOut',
+    }, '<');
+
+    // Small delay before restarting the loop
+    tl.to({}, { duration: 0.5 });
+
+    return () => tl.kill();
+  }, [])
   return (
     <>
       {/* <Box
@@ -94,7 +208,7 @@ const theme=useTheme();
         textAlign: { xs: 'center', md: 'unset' },
       }}
     >
-      <Typography variant="h2">
+      {/* <Typography variant="h2">
         Secure
         <Box component="span" sx={{ color: 'text.disabled' }}>
           {` Digital `}  
@@ -103,12 +217,101 @@ const theme=useTheme();
           {` Transactions `}  
         </Box>
         With PKI Technology
-      </Typography>
+      </Typography> */}
 
+
+<Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'start',
+        ml: { xs: 0, md: 10 },
+        // minHeight: '100vh',
+        // backgroundColor: '#F3F4F6',
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          gap: '0.5rem',
+        }}
+      >
+        <Typography
+          ref={secureRef}
+          variant="h3"
+          sx={{ fontWeight: 'bold' }}
+        >
+          Empower
+        </Typography>
+        <Box
+          ref={middleContainerRef}
+          sx={{
+            position: 'relative',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100px', // Adjusted for PKI-related words
+          }}
+        >
+          <Typography
+            ref={word1Ref}
+            variant="h3"
+            sx={{
+              color: 'primary.main',
+              position: 'absolute',
+              fontWeight: 'bold',
+            }}
+          >
+            Innovation
+          </Typography>
+          <Typography
+            ref={word2Ref}
+            variant="h3"
+            sx={{
+              color: 'primary.main',
+              position: 'absolute',
+              fontWeight: 'bold',
+            }}
+          >
+            Security
+          </Typography>
+          <Typography
+            ref={word3Ref}
+            variant="h3"
+            sx={{
+              color: 'primary.main',
+              position: 'absolute',
+              fontWeight: 'bold',
+            }}
+          >
+            Digital
+          </Typography>
+          <Typography
+            ref={authRef}
+            variant="h3"
+            sx={{
+              color: 'primary.main',
+              position: 'absolute',
+              fontWeight: 'bold',
+            }}
+          >
+            Technology
+          </Typography>
+        </Box>
+        <Typography
+          ref={trustRef}
+          variant="h3"
+          sx={{ fontWeight: 'bold' }}
+        >
+          Ethiopia
+        </Typography>
+      </Box>
+    </Box>
       <Typography sx={{ color: 'text.secondary', mt: 3, mb: 5 }}>
         Ensure trust, authentication, and encryption in Ethiopia’s digital ecosystem with  
         **Public Key Infrastructure (PKI)**—the backbone of secure online interactions.
       </Typography>
+
 
       <Stack spacing={3} alignItems="center" direction={{ xs: 'column', md: 'row' }}>
         {/* <Button color="inherit" size="large" variant="contained">

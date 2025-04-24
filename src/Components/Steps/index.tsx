@@ -126,14 +126,14 @@ export default function Steps() {
           ))}
         </Box>
 
-        <Button
+        {/* <Button
           variant="contained"
           size="large"
           color="inherit"
           startIcon={<Iconify icon="mdi:file-key-outline" />}
         >
           Start Registration
-        </Button>
+        </Button> */}
       </Container>
     </Box>
   );

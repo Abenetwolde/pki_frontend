@@ -17,6 +17,7 @@ import useResponsive from '@/hooks/useResponsive';
 import Iconify from '../iconify';
 // import Image from '../image';
 import Image from 'next/image';
+import faq from '@/assets/illustrations/faq.png';
 
 // ----------------------------------------------------------------------
 
@@ -71,7 +72,7 @@ export default function MarketingLandingFaqs() {
         {isMdUp && (
           <Grid size={{ xs: 12, md: 6, lg: 5 }}>
            <Image
-  src="/assets/illustrations/illustration_faqs.svg"
+  src={faq}
   alt="FAQs Illustration"
   width={500} // Set the desired width
   height={500} // Set the desired height
