@@ -95,12 +95,12 @@ const theme=useTheme();
 
     // Edge words move apart with a smaller distance for a reduced gap
     tl.to(secureRef.current, {
-      x: -70,
+      x: -60,
       duration: 0.8,
       ease: 'power3.out',
     }, 0)
     .to(trustRef.current, {
-      x: 70,
+      x: 60,
       duration: 0.8,
       ease: 'power3.out',
     }, 0);
@@ -113,7 +113,7 @@ const theme=useTheme();
     }, 0) // Start at the same time as edge words scatter
     .to(authRef.current, {
       opacity: 0, // Hide "Authenticate" to make way for "Identity"
-      duration: 0.1,
+      duration: 0,
       ease: 'power2.inOut',
     }, 0)
     .to(word1Ref.current, {
@@ -178,7 +178,7 @@ const theme=useTheme();
     }, '<');
 
     // Small delay before restarting the loop
-    tl.to({}, { duration: 0.5 });
+    tl.to({}, { duration: 5 });// Adjust this duration to control the time before the loop restarts
 
     return () => tl.kill();
   }, [])
@@ -225,7 +225,7 @@ const theme=useTheme();
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'start',
-        ml: { xs: 0, md: 10 },
+        ml: { xs: 5, md: 5 },
         // minHeight: '100vh',
         // backgroundColor: '#F3F4F6',
       }}

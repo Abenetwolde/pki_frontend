@@ -81,7 +81,7 @@ export default function Summary() {
           {SUMMARY.map((value, index) => (
             <Stack
               key={value.title}
-              ref={(el) => (summaryRefs.current[index] = el)}
+              // ref={(el) => (summaryRefs.current[index] = el)}
               padding={4}
               alignItems="center"
               spacing={2}

@@ -3,7 +3,7 @@ import { Button, Link, Stack, Avatar, Menu, MenuItem, Divider, Typography } from
 import NavList from "./NavList";
 import { useState } from "react";
 import Iconify from "@/Components/iconify";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useDispatch } from "react-redux"; // Import useDispatch from react-redux
 // import { clearUserToken } from "@/path-to-your-userStore"; // Adjust the import path to your userStore file
 
@@ -14,7 +14,7 @@ export default function NavDesktop({ data, sx }: any) {
   const open = Boolean(anchorEl);
   const router = useRouter();
   const dispatch = useDispatch(); // Initialize useDispatch to dispatch Redux actions
-
+  const pathname = usePathname();
   // Handle opening the menu
   const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -49,14 +49,19 @@ export default function NavDesktop({ data, sx }: any) {
         ...sx,
       }}
     >
-      {data.map((link: any) => (
-        <NavList key={link.title} item={link} />
-      ))}
-      <Link href="/register">
-        <Button variant="contained" color="inherit" rel="noopener">
-          Sign Up / Sign In
-        </Button>
-      </Link>
+         {/* Conditionally render NavList and Sign Up / Sign In button */}
+         {pathname !== "/dashboard" && (
+        <>
+          {data.map((link: any) => (
+            <NavList key={link.title} item={link} />
+          ))}
+          <Link href="/register">
+            <Button variant="contained" color="inherit" rel="noopener">
+              Sign Up / Sign In
+            </Button>
+          </Link>
+        </>
+      )}
 
       {/* Avatar with 'A' */}
       <Avatar

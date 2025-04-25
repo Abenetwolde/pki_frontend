@@ -11,6 +11,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { store } from "@/redux/store";
 import { usePathname } from "next/navigation";
 import Header from "@/Header";
+import "@/globals.css"; // Adjust the path if necessary
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
